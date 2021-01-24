@@ -40,8 +40,8 @@ def get_svhn(args, data_dir='./data/svhn/'):
     
     normal_data = data[labels==args.normal_class]
     normal_labels = labels[labels==args.normal_class]
-    anormal_data = data[labels!=args.normal_class]
-    anormal_labels = labels[labels!=args.normal_class]
+    anormal_data = data[labels!=args.anormal_class]
+    anormal_labels = labels[labels!=args.anormal_class]
     
     N_train = int(normal_data.shape[0]*0.8)
     
@@ -53,7 +53,7 @@ def get_svhn(args, data_dir='./data/svhn/'):
     
     x_test = np.concatenate((anormal_data, normal_data[N_train:]), axis=0) 
     y_test = np.concatenate((anormal_labels, normal_labels[N_train:]), axis=0)
-    y_test = np.where(y_test==args.normal_class, 0, 1)
+    y_test = np.where(y_test==args.anormal_class, 0, 1)
     data_test = SVHN_loader(x_test, y_test, transform=transform)
     dataloader_test = DataLoader(data_test, batch_size=args.batch_size, 
                                  shuffle=True, num_workers=0)

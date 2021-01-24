@@ -16,8 +16,11 @@ if __name__ == '__main__':
                         help="Batch size")
     parser.add_argument('--latent_dim', type=int, default=100,
                         help='Dimension of the latent variable z')
-    parser.add_argument('--anormal_class', type=int, default=0,
+    parser.add_argument('--normal_class', type=int, default=0,
                         help='Class to be treated as normal class.')
+    parser.add_argument('--anormal_class', type=int, default=1,
+                        help='Class to be treated as anormal class.')
+
     parser.add_argument('--pretrained', type=bool, default=False,
                         help='If is there a pretrained model.')
     parser.add_argument('--spec_norm', type=bool, default=False,

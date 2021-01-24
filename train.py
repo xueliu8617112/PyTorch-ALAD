@@ -79,17 +79,17 @@ class ALADTrainer:
                 loss_gezz = criterion(out_fakezz, y_true) + criterion(out_truezz, y_fake)
                 loss_gexx = criterion(out_fakexx, y_true) + criterion(out_truexx, y_fake)
                 cycle_consistency = loss_gezz + loss_gexx
-                loss_ge = loss_gexz + cycle_consistency
-
+                loss_ge = loss_gexz +loss_gezz + loss_gexx # + cycle_consistency
                 #Computing gradients and backpropagate.
                 loss_d.backward(retain_graph=True)
-                optimizer_d.step()
-
                 loss_ge.backward()
+                optimizer_d.step()
                 optimizer_ge.step()
-                
-                ge_losses += loss_ge.item()
+
                 d_losses += loss_d.item()
+
+                ge_losses += loss_ge.item()
+
 
             if epoch % 10 == 0:
                 vutils.save_image((self.G(fixed_z).data+1)/2., './images/{}_fake.png'.format(epoch))
